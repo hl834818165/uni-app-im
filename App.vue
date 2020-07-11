@@ -1,0 +1,374 @@
+<script>
+	import api from './api/api.js'
+	export default {
+		globalData: {
+			resref: false, // 用来刷新页面的
+			mine: {},
+			friends: [],
+			applys: [],
+			catting: {},
+		}
+	}
+</script>
+
+<style>
+	page {
+		height: 100%;
+	}
+
+	uni-image {
+		display: block;
+		max-height: 100%;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	view {
+		font-style: normal;
+		font-weight: normal;
+	}
+
+	.content {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background: #F8F8F8;
+		font-size: 16px;
+	}
+	.gray-text {
+		display: flex;
+		width: 100%;
+		box-sizing: border-box;
+		color: #999999;
+		font-size: 14px;
+		padding: 30rpx 36rpx 10rpx;
+	}
+	.footer-operation {
+		position: fixed;
+		let: 0;
+		bottom: 0;
+		padding: 48rpx 36rpx;
+		width: 100%;
+		box-sizing: border-box;
+	}
+	/* 登录 */
+	.pop__flex1{
+		flex: 1;
+	}
+	.pop__panel .pop__btn-default {
+		border-radius: 7rpx;
+		box-sizing: border-box;
+		color: #fff;
+		display: block;
+		font-size: 35rpx;
+		font-family: "Microsoft Yahei";
+		text-align: center;
+		outline: none;
+		overflow: hidden;
+		padding: 0 20rpx;
+		text-decoration: none;
+		line-height: 90rpx;
+		position: relative;
+	}
+	.pop__panel .pop__btn-default:not(:last-child) {
+		margin-bottom: 24rpx;
+	}
+	.pop__panel .pop__btn-primary {
+		background-color: #1AAD19;
+	}
+	.pop__panel .pop__btn-danger {
+		background-color: #DD524D;
+	}
+	.pop__panel .pop__form-title {
+		color: #333;
+		padding: 100rpx 30rpx 50rpx;
+		font-size: 40rpx;
+	}
+	.pop__panel .pop__form-cell {
+		position: relative;
+		font-size: 36rpx;
+		padding: 0 32rpx;
+		height: 110rpx;
+		display: flex;
+		align-items: center;
+		box-align: center;
+	}
+	.pop__panel .pop__form-label {
+		display: block;
+		width: 150rpx;
+		word-wrap: break-word;
+		word-break: break-all;
+	}
+	/deep/ .pop__panel .pop__form-input .uni-input-input {
+		display: block;
+		font-size: 36rpx;
+		border: 0;
+		outline: 0;
+		background-color: transparent;
+	}
+	.pop__panel .pop__form-input-placeholder{
+		font-size: 36rpx;
+	}
+	.pop__panel .pop__form-captcha {
+		width: 280rpx;
+		height: 110rpx;
+		margin-left: 30rpx;
+		vertical-align: middle;
+	}
+	.pop__panel .pop__form-link {
+		padding: 32rpx 32rpx 0 32rpx;
+	}
+	.pop__panel .pop__form-link .btn__register,
+	.pop__panel .pop__form-link .btn__loginout {
+		font-size: 30rpx;
+		color: #0060a0;
+	}
+	.pop__panel .pop__form-btn {
+		padding: 100rpx 5rpx;
+	}
+	/* 用户详情 cell */
+	.detail-box {
+		display: flex;
+		align-items: center;
+		height: 136rpx;
+		padding: 12rpx 36rpx;
+		background: #FFFFFF;
+	}
+
+	.detail-avatar {
+		width: 128rpx;
+		height: 128rpx;
+	}
+
+	.detail-cont {
+		flex: 1;
+		padding: 0 24rpx;
+	}
+
+	.detail-cont .detail-name {
+		color: #333;
+		font-size: 18px;
+	}
+
+	.detail-cont .detail-title {
+		margin-top: 24rpx;
+		font-size: 12px;
+		color: #8F8F94;
+	}
+	.cell-cont {
+		color: #8F8F94
+	}
+	/* 有下边框的cell */
+	.default-cell {
+		height: 120rpx;
+		padding: 0 36rpx;
+		background: #FFFFFF;
+	}
+
+	.default-cell.bg-cell {
+		background-color: #EFEFF4;
+		height: auto;
+		padding-top: 24rpx;
+		padding-bottom: 24rpx;
+	}
+
+	.default-cell:first-child .cell-row {
+		border-top: 1px;
+	}
+	.chat-thumb {
+		font-size: 14px;
+		color: rgba(0, 0, 0, .3);
+		text-align: center;
+		padding-top: 15rpx;
+		padding-bottom: 15rpx;
+	}
+	.default-cell .cell-row.chat-row {
+		border-top: 0px solid #FFFFFF;
+	}
+	.default-cell .cell-row {
+		display: flex;
+		align-items: center;
+		height: 100%;
+		border-top: 1px solid #F4F4F4;
+	}
+
+	.default-cell .cell-avatar {
+		width: 85rpx;
+		height: 85rpx;
+		border-radius: 10rpx;
+	}
+
+	.default-cell .cell-title {
+		flex: 1;
+		padding: 0 24rpx;
+	}
+
+	.default-cell .cell-title .search-titile,
+	.default-cell .cell-title .search-data {
+		font-size: 18px;
+	}
+
+	.default-cell .cell-title .search-data {
+		color: #1AAD19;
+		padding: 0 14rpx;
+	}
+
+	.default-cell .cell-operation-tip {
+		color: #CCCCCC;
+	}
+
+	.default-cell .cell-operation-btn {
+		font-size: 14px;
+		background-color: #1AAD19;
+		color: #FFFFFF;
+		padding: 10rpx 20rpx;
+		border-radius: 10rpx;
+	}
+	
+	.default-cell.cell-item {
+		height: 90rpx;
+	}
+	.default-cell.cell-item .cell-title {
+		flex: unset;
+	}
+	.default-cell.cell-item .cell-cont {
+		flex: 1;
+	}
+	/* 弹框 */
+
+	.hl-dialog.default,
+	.hl-dialog.default .dialog-mask {
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+	}
+
+	.hl-dialog.default {
+		position: fixed;
+		z-index: 1000;
+	}
+
+	.hl-dialog.default .dialog-mask {
+		position: absolute;
+		z-index: 1001;
+		background-color: rgba(0, 0, 0, 0.6);
+	}
+
+	.hl-dialog.default .dialog-cont {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 80%;
+		background-color: #FFFFFF;
+		border-radius: 10rpx;
+		z-index: 1002;
+	}
+
+	.hl-dialog.default .dialog-cont .dialog-body {
+		border-bottom: 1px solid #F4F4F4;
+	}
+
+	.hl-dialog.default .dialog-cont .dialog-body {
+		padding: 48rpx 24rpx;
+	}
+
+	.hl-dialog.default .dialog-cont .dialog-footer {
+		font-size: 18px;
+		display: flex;
+		line-height: 96rpx;
+	}
+
+	.hl-dialog.default .dialog-cont .dialog-body .dialog-msg {
+		text-align: center;
+		color: #353535;
+		padding: 24rpx 0;
+	}
+
+	.hl-dialog.default .dialog-footer .dialog-btn {
+		flex: 1;
+	}
+
+	.hl-dialog.default .dialog-footer .dialog-btn.success {
+		text-align: center;
+		color: #1AAD19;
+	}
+	
+	.chatting {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		height: 100%;
+	}
+	.chatting .cont {
+		flex: 1;
+		overflow-x: hidden;
+		overflow-y: hidden;
+	}
+	.chatting .cont .default-cell:first-child {
+		margin-top: 30rpx;
+	}
+	.chatting .cont .default-cell {
+		background-color: unset;
+		height: auto;
+		margin-bottom: 30rpx;
+	}
+	.chatting .cont_r .chat-row {
+		display: flex;
+		flex-direction: row-reverse;
+	}
+	.chatting .cont .cell-chatText {
+		max-width: calc(100% - 115rpx);
+		word-wrap: break-word;
+		word-break: normal;
+	}
+	.chatting .cont .cell-chatText {
+		position: relative;
+		padding: 12rpx;
+		box-sizing: border-box;
+		border-radius: 4px;
+	}
+	.chatting .cont .cont_l .cell-chatText::after {
+		position: absolute;
+		top: 15rpx;
+		left: -34rpx;
+		display: block;
+		content: '';
+		width: 0;
+		height: 0;
+		border-top: 18rpx solid transparent;
+		border-bottom: 18rpx solid transparent;
+		border-left: 18rpx solid transparent;
+		border-right: 18rpx solid #a5d7ff;
+	}
+	.chatting .cont .cont_r .cell-chatText::after {
+		position: absolute;
+		top: 15rpx;
+		right: -34rpx;
+		display: block;
+		content: '';
+		width: 0;
+		height: 0;
+		border-top: 18rpx solid transparent;
+		border-bottom: 18rpx solid transparent;
+		border-left: 18rpx solid #FFFFFF;
+		border-right: 18rpx solid transparent;
+	}
+	.chatting .cont .cont_l .cell-chatText {
+		margin-left: 30rpx;
+		background-color: #a5d7ff;
+		color: #333333;
+	}
+	.chatting .cont .cont_r .cell-chatText {
+		margin-right: 30rpx;
+		background-color: #FFFFFF;
+		color: #333333;
+	}
+	.chatting .cont .default-cell .cell-row {
+		align-items: unset;
+	}
+</style>

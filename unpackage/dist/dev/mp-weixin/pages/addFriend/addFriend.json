@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "添加朋友",
+  "usingComponents": {
+    "uni-icons": "/components/uni-icons/uni-icons"
+  }
+}

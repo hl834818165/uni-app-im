@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/message/message",
+    "pages/friend/friend",
+    "pages/init/init",
+    "pages/mine/mine",
+    "pages/addFriend/addFriend",
+    "pages/detail/friend_detail",
+    "pages/detail/send_apply",
+    "pages/detail/detail_apply",
+    "pages/chatting/friend_chat"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/message/message",
+        "iconPath": "static/tabbar/msg-default.png",
+        "selectedIconPath": "static/tabbar/msg-selected.png",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/friend/friend",
+        "iconPath": "static/tabbar/friend-default.png",
+        "selectedIconPath": "static/tabbar/friend-selected.png",
+        "text": "通讯录"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "iconPath": "static/tabbar/mine-default.png",
+        "selectedIconPath": "static/tabbar/mine-selected.png",
+        "text": "个人中心"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap66.json"
+}

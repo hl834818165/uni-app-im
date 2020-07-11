@@ -1,0 +1,94 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"id": "login",
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		}, {
+			"id": "message",
+			"path": "pages/message/message",
+			"style": {
+				"navigationBarTitleText": "消息"
+			}
+		}, {
+			"id": "friend",
+			"path": "pages/friend/friend",
+			"style": {
+				"navigationBarTitleText": "通讯录"
+			}
+		}, {
+			"id": "init",
+			"path": "pages/init/init",
+			"style": {
+				"navigationBarTitleText": "加载中"
+			}
+		}, {
+			"id": "mine",
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		}, {
+			"id": "addFriend",
+			"path": "pages/addFriend/addFriend",
+			"style": {
+				"navigationBarTitleText": "添加朋友"
+			}
+		}, {
+			"id": "friend_detail",
+			"path": "pages/detail/friend_detail",
+			"style": {
+				"navigationBarTitleText": "详细资料"
+			}
+		}, {
+			"id": "send_apply",
+			"path": "pages/detail/send_apply",
+			"style": {
+				"navigationBarTitleText": "发送验证"
+			}
+		}, {
+			"id": "detail_apply",
+			"path": "pages/detail/detail_apply",
+			"style": {
+				"navigationBarTitleText": "详细资料"
+			}
+		}, {
+			"id": "friend_chat",
+			"path": "pages/chatting/friend_chat",
+			"style": {
+				"navigationBarTitleText": "聊天",
+				"enablePullDownRefresh": false
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#3cc51f",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/message/message",
+			"iconPath": "static/tabbar/msg-default.png",
+			"selectedIconPath": "static/tabbar/msg-selected.png",
+			"text": "消息"
+		}, {
+			"pagePath": "pages/friend/friend",
+			"iconPath": "static/tabbar/friend-default.png",
+			"selectedIconPath": "static/tabbar/friend-selected.png",
+			"text": "通讯录"
+		}, {
+			"pagePath": "pages/mine/mine",
+			"iconPath": "static/tabbar/mine-default.png",
+			"selectedIconPath": "static/tabbar/mine-selected.png",
+			"text": "个人中心"
+		}]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#F8F8F8"
+	}
+}
