@@ -1,0 +1,382 @@
+<template>
+	<view style="overflow: hidden;">
+		<view class="msg">
+			<view class="send-icon send-sound">
+				<image src="../../static/chat/sound_default.png" @touchstart="startVoice" @touchend="stopVoice"></image>
+			</view>
+			<view class="send-inp">
+				<textarea id="content" class="uni-input" :auto-height="true" v-model="content" @blur="blurInp" />
+			</view>
+			<view class="send-icon send-expression">
+				<image src="../../static/chat/expression_default.png" @click.stop="triggerEmoji"></image>
+			</view>
+			<view v-show="!showSend" :class="['send-icon', 'send-add']">
+				<image src="../../static/chat/add_default.png" @click.stop="triggerMore"></image>
+			</view>
+			<view :class="[showSend ? 'active' : '', 'send-btn']" @click="sendMsg">{{ sendTitle }}</view>
+		</view>
+		
+		<!-- 表情库 -->
+		<view class="card-box emoji-card" :style="{'height': initCardH + 'px'}" @click.stop>
+			<swiper :indicator-dots="true" :circular="true" :duration="500">
+				<swiper-item v-for="(e, i) in splitEmoji" :key="i" :index="i">
+					<view class="emoji-box">
+						<view class="emoji-item" v-for="(_e, _i) in e" :key="_i" :index="_i" @click="insertEmoji(_e, _i)">
+							<text>{{ _e }}</text>
+						</view>
+					</view>
+				</swiper-item>
+			</swiper>
+		</view>
+		<!-- 更多库 -->
+		<view class="card-box more-card" :style="{'height': initMoreH + 'px'}" @click.stop>
+			<view class="more-box">
+				<view class="more-item" @click="sendImg">
+					<view class="item-img">
+						<image src="../../static/chat/album.png" mode=""></image>
+					</view>
+					<text class="item-txt">相册</text>
+				</view>
+				<view class="more-item" @click="sendCamera">
+					<view class="item-img">
+						<image src="../../static/chat/photograph.png" mode=""></image>
+					</view>
+					<text class="item-txt">拍摄</text>
+				</view>
+				<view class="more-item">
+					<view class="item-img">
+						<image src="../../static/chat/converse.png" mode=""></image>
+					</view>
+					<text class="item-txt">视频通话</text>
+				</view>
+				<view class="more-item">
+					<view class="item-img">
+						<image src="../../static/chat/position.png" mode=""></image>
+					</view>
+					<text class="item-txt">位置</text>
+				</view>
+				<view class="more-item" @click="sendFile">
+					<view class="item-img">
+						<image src="../../static/chat/file.png" mode=""></image>
+					</view>
+					<text class="item-txt">文件</text>
+				</view>
+			</view>
+		</view>
+		
+	</view>
+</template>
+
+<script>
+	import unit from '../../unit/unit.js'
+	import api from '../../api/api.js'
+	import http from '../../http/http.js'
+	const recorderManager = uni.getRecorderManager()
+	export default {
+		computed: {
+			// 显示发送按钮
+			showSend () {
+				if (this.content == '') {
+					return false
+				} else {
+					return true
+				}
+			},
+			// 分割表情数组
+			splitEmoji () {
+				return unit.splitArr(this.emoji, 24)
+			}
+		},
+		data () {
+			return {
+				cursor: null,											// 光标位置
+				emoji: [],
+				content: '',											// 发送内容
+				sendTitle: '发送',									// 发送按钮内容
+				voiceLen: 0,											// 录音时长
+				voicePath: '',										// 录音文件
+				emoji: getApp().globalData.emoji, // 表情库内容
+				isCard: false,										// 是否展示表情库
+				initCardH: null,									// 表情库初始高度
+				countCardH: null,									// 表情库正式高度
+				isMore: false,										// 是否展示更多库
+				initMoreH: null,									// 更多库初始高度
+				countMoreH: null									// 更多库正式高度
+			}
+		},
+		mounted () {
+			this.getContHFn('.emoji-card', 'countCardH')
+			this.getContHFn('.more-card', 'countMoreH')
+			this.$nextTick(function(){
+				this.initCardH = 0
+				this.initMoreH = 0
+			})
+		},
+		methods: {
+			clearContent () {
+				this.content = ''
+			},
+			/** 获取元素高度 */
+			getContHFn (target, pary) {
+				let self = this
+				self.$nextTick(function(){
+					const query = uni.createSelectorQuery().in(self)
+					query.select(target).boundingClientRect(_ => {
+						self[pary] = _.height
+					}).exec()
+				})
+			},
+			// 切换表情库
+			triggerEmoji () {
+				if (this.isCard) {
+					this.hideEmoji()
+				} else {
+					this.showEmoji()
+					this.hideMore()
+				}
+			},
+			// 隐藏表情库
+			hideEmoji () {
+				this.initCardH = 0
+				this.isCard = false
+			},
+			// 显示表情库
+			showEmoji () {
+				this.initCardH = this.countCardH
+				this.isCard = true
+			},
+			// 切换更多库
+			triggerMore () {
+				if (this.isMore) {
+					this.hideMore()
+				} else {
+					this.showMore()
+					this.hideEmoji()
+				}
+			},
+			// 隐藏更多库
+			hideMore () {
+				this.initMoreH = 0
+				this.isMore = false
+			},
+			// 显示更多库
+			showMore () {
+				this.initMoreH = this.countMoreH
+				this.isMore = true
+			},
+			// 发送信息回调
+			sendMsg () {
+				this.$emit('sendMsg', this.content)
+			},
+			// 失去焦点
+			// 存放失焦之后的光标位置
+			blurInp (event) {
+				this.cursor = event.detail.cursor
+			},
+			// 插入 表情
+			insertEmoji (e, i) {
+				const list = getApp().globalData.emoji
+				this.content = this.content.substr(0, this.cursor) + e + this.content.substr(this.cursor, this.content.length)
+				this.cursor = Number(this.cursor) + 2
+			},
+			// 发送语音
+			sendVoice (res) {
+				let self = this
+				self.voicePath = res.tempFilePath
+				uni.uploadFile({
+					url: http.getIp() + '/upload',
+					filePath: self.voicePath,
+					name: 'file',
+					formData: {},
+					success: (res) => {
+						let _res = JSON.parse(res.data)
+						if (_res.code == 200) {
+							self.$emit('sendVoice', {
+								res: _res.data,
+								voice_len: self.voiceLen
+							})
+						}
+					}
+				})
+			},
+			startVoice () {
+				let self = this
+				let timer = null
+				// 检测到录音结束
+				recorderManager.onStop(function (res) {
+					self.sendVoice(res)
+					clearInterval(timer)
+				})
+				recorderManager.start()
+				this.voiceLen = 0
+				timer = setInterval(() => {
+					this.voiceLen++
+				}, 1000)
+			},
+			stopVoice () {
+				recorderManager.stop()
+			},
+			// 发送图片
+			sendImg () {
+				let self = this
+				uni.chooseImage({
+					count: 1,
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: (res) => {
+						let _file = res.tempFilePaths
+						uni.uploadFile({
+							url: http.getIp() + '/upload',
+							filePath: _file[0],
+							name: 'file',
+							formData: {},
+							success: (res) => {
+								let _res = JSON.parse(res.data)
+								if (_res.code == 200) {
+									self.$emit('sendImg', _res.data)
+								}
+							}
+						})
+					},
+					error: (ret) => {
+						console.log(ret)
+					}
+				})
+			},
+			/** 
+			 * 要实现微信的拍摄功能 需要开发源生插件，亦可以在插件市场找相关的
+			 * 这里使用 5+ 的方法 拍照 录屏分开 （局限app）
+			 * 微信小程序  uni-app 文档上有提供 （还没试）
+			 */
+			sendCamera () {
+				let self = this
+				let camera = plus.camera.getCamera();
+				camera.captureImage((path) => {
+					uni.uploadFile({
+						url: http.getIp() + '/upload',
+						filePath: path,
+						name: 'file',
+						formData: {},
+						success: (res) => {
+							let _res = JSON.parse(res.data)
+							if (_res.code == 200) {
+								self.$emit('sendImg', _res.data)
+							}
+						}
+					})
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			sendFile () {
+				
+			}
+		}
+	}
+</script>
+
+<style>
+	.msg {
+		width: 100%;
+		box-sizing: border-box;
+		display: flex;
+		align-items: flex-end;
+		background: #F4F4F4;
+		padding: 14rpx 18rpx;
+		overflow: hidden;
+	}
+	.msg .send-inp {
+		flex: 1;
+		height: auto;
+		min-height: 60rpx;
+		max-height: 180rpx;
+		background: #FFFFFF;
+		text-indent: 1em;
+		margin-right: 18rpx;
+	}
+	.msg .send-inp .uni-input {
+		width: 100%;
+		min-height: 60rpx;
+		max-height: 180rpx;
+		line-height: 60rpx;
+	}
+	.msg .send-btn {
+		width: 0;
+		height: 56rpx;
+		text-align: center;
+		font-size: 24rpx;
+		color: #FFFFFF;
+		background-color: #1AAD19;
+		transition: width .4s;
+		line-height: 56rpx;
+	}
+	.msg .send-btn.active {
+		width: 80rpx;
+	}
+	.msg .send-icon {
+		width: 48rpx;
+		height: 48rpx;
+		margin-right: 18rpx;
+	}
+	.send-icon.send-add {
+		margin-right: 0;
+	}
+	.msg .send-icon image {
+		width: 100%;
+		height: 100%;
+	}
+	.card-box {
+		transition: all 0.3s;
+		overflow: hidden;
+	}
+	.emoji-box,
+	.more-box {
+		padding: 18rpx;
+		overflow: auto;
+	}
+	.emoji-box .emoji-item {
+		float: left;
+		width: 49rpx;
+		height: 49rpx;
+		margin-right: 46rpx;
+		margin-bottom: 46rpx;
+	}
+	.emoji-box .emoji-item:nth-child(8n) {
+		margin-right: 0;
+	}
+	.emoji-box .emoji-item image {
+		width: 100%;
+		height: 100%;
+	}
+	.more-box {
+		margin-top: 45rpx;
+	}
+	.more-box .more-item {
+		float: left;
+		width: 111rpx;
+		text-align: center;
+		font-size: 24rpx;
+		margin-right: 90rpx;
+		margin-bottom: 45rpx;
+	}
+	.more-box .more-item:nth-child(4n) {
+		margin-right: 0;
+	}
+	.more-box .more-item .item-img {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 111rpx;
+		height: 111rpx;
+		background-color: #FFFFFF;
+		border-radius: 8rpx;
+	}
+	.more-box .more-item .item-img image {
+		width: 60rpx;
+		height: 60rpx;
+	}
+	.more-box .more-item .item-txt {
+		display: block;
+		margin-top: 12rpx;
+	}
+</style>

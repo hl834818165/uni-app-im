@@ -34,6 +34,7 @@
 
 <script>
 	import api from '../../api/api.js'
+	import { mapState } from 'vuex'
 	export default {
 		data () {
 			return {
@@ -49,13 +50,13 @@
 				}
 			}
 		},
+		computed: {
+			...mapState([
+				'base'
+			])
+		},
 		onShow () {
-			uni.getStorage({
-				key: 'search_apply',
-				success: (res) => {
-					this.$set(this, 'list', JSON.parse(res.data))
-				}
-			})
+			this.$set(this, 'list', this.base.search_apply)
 		},
 		methods: {
 			addApply () {

@@ -24,12 +24,12 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.uni-popup-dialog.data-v-531fb88c {
+.uni-popup-dialog.data-v-2fab037e {
   width: 300px;
   border-radius: 15px;
   background-color: #fff;
 }
-.uni-dialog-title.data-v-531fb88c {
+.uni-dialog-title.data-v-2fab037e {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -43,11 +43,11 @@
   padding-top: 15px;
   padding-bottom: 5px;
 }
-.uni-dialog-title-text.data-v-531fb88c {
+.uni-dialog-title-text.data-v-2fab037e {
   font-size: 16px;
   font-weight: 500;
 }
-.uni-dialog-content.data-v-531fb88c {
+.uni-dialog-content.data-v-2fab037e {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -63,11 +63,11 @@
           align-items: center;
   padding: 5px 15px 15px 15px;
 }
-.uni-dialog-content-text.data-v-531fb88c {
+.uni-dialog-content-text.data-v-2fab037e {
   font-size: 14px;
   color: #6e6e6e;
 }
-.uni-dialog-button-group.data-v-531fb88c {
+.uni-dialog-button-group.data-v-2fab037e {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -79,7 +79,7 @@
   border-top-style: solid;
   border-top-width: 1px;
 }
-.uni-dialog-button.data-v-531fb88c {
+.uni-dialog-button.data-v-2fab037e {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -98,33 +98,33 @@
           align-items: center;
   height: 45px;
 }
-.uni-border-left.data-v-531fb88c {
+.uni-border-left.data-v-2fab037e {
   border-left-color: #f0f0f0;
   border-left-style: solid;
   border-left-width: 1px;
 }
-.uni-dialog-button-text.data-v-531fb88c {
+.uni-dialog-button-text.data-v-2fab037e {
   font-size: 14px;
 }
-.uni-button-color.data-v-531fb88c {
+.uni-button-color.data-v-2fab037e {
   color: #007aff;
 }
-.uni-dialog-input.data-v-531fb88c {
+.uni-dialog-input.data-v-2fab037e {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
           flex: 1;
   font-size: 14px;
 }
-.uni-popup__success.data-v-531fb88c {
+.uni-popup__success.data-v-2fab037e {
   color: #4cd964;
 }
-.uni-popup__warn.data-v-531fb88c {
+.uni-popup__warn.data-v-2fab037e {
   color: #f0ad4e;
 }
-.uni-popup__error.data-v-531fb88c {
+.uni-popup__error.data-v-2fab037e {
   color: #dd524d;
 }
-.uni-popup__info.data-v-531fb88c {
+.uni-popup__info.data-v-2fab037e {
   color: #909399;
 }
 

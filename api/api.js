@@ -16,6 +16,17 @@ export default {
 			})
 		})
 	},
+	upload (param) {
+		return new Promise((resolve, reject) => {
+			http.httpRequest(`/upload`, 'POST', {}, param)
+			.then(res => {
+				return resolve(res)
+			})
+			.catch(ret => {
+				return reject(ret)
+			})
+		})
+	},
 	/** 搜索用户
 	 * @param {uid} param
 	 */
@@ -41,6 +52,17 @@ export default {
 			})
 		})
 	},
+	lookApply (param) {
+		return new Promise((resolve, reject) => {
+			http.httpRequest(`/user/lookApply`, 'POST', {}, param)
+			.then(res => {
+				resolve(res)
+			})
+			.catch(ret => {
+				reject(ret)
+			})
+		})
+	},
 	getApply (param) {
 		return new Promise((resolve, reject) => {
 			http.httpRequest(`/user/getApply?friend_uid=${param.friend_uid}&pass_state=${param.pass_state}&uid=${param.uid}`, 'GET', {}, param)
@@ -55,6 +77,17 @@ export default {
 	setApply (param) {
 		return new Promise((resolve, reject) => {
 			http.httpRequest(`/user/setApply`, 'POST', {}, param)
+			.then(res => {
+				return resolve(res)
+			})
+			.catch(ret => {
+				return reject(ret)
+			})
+		})
+	},
+	lookChat (param) {
+		return new Promise((resolve, reject) => {
+			http.httpRequest('/chat/lookChat', 'POST', {}, param)
 			.then(res => {
 				return resolve(res)
 			})

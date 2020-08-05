@@ -2,6 +2,7 @@
   "navigationBarTitleText": "聊天",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "hl-chat-box": "/components/hl-chat-box/hl-chat-box",
     "load-refresh": "/components/load-refresh/load-refresh"
   }
 }

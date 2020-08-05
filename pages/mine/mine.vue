@@ -10,8 +10,7 @@
 		</view>
 		<view class="pop__panel">
 			<view class="pop__form-link">
-				<view class="btn__loginout" @click="loginout">登出</view>
-				<view class="btn__loginout" @click="resref">刷新</view>
+				<view class="btn__loginout" @click="loginOut">登出</view>
 			</view>
 		</view>
 		
@@ -22,7 +21,10 @@
 </template>
 
 <script>
+	let mine = null
+	import Mine from './mine.js'
 	import api from '../../api/api.js'
+	import { mapState, mapActions } from 'vuex'
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import uniPopupMessage from '@/components/uni-popup/uni-popup-message.vue'
@@ -46,28 +48,21 @@
 				}
 			}
 		},
+		computed: {
+			...mapState([
+				'base'
+			])
+		},
 		onShow() {
-			this.$set(this, 'list', getApp().globalData.mine)
+			mine = new Mine(this)
+			this.$set(this, 'list', this.base.mine)
 		},
 		methods: {
-			resref () {
-				console.log(getCurrentPages())
-			},
-			loginout () {
-				uni.clearStorage()
-				this.socketEmit('close', {
-					data: getApp().globalData.mine.username
-				})
-				getApp().globalData = {
-					resref: true,
-					mine: {},
-					friends: [],
-					applys: [],
-					catting: {},
-				}
-				uni.reLaunch({
-					url: '../login/login'
-				})
+			...mapActions([
+				'ACT_INIT'
+			]),
+			loginOut () {
+				mine.loginOut()
 			}
 		}
 	}

@@ -1,0 +1,81 @@
+<template>
+	<view class="content live-cont">
+		<live-pusher
+			ref="livePusher"
+			:url="livepush"
+			mode="FHD"
+			:beauty="beauty"
+			:whiteness="whiteness"
+			device-position="front"
+			:style="{
+				position: 'position',
+				left: '0',
+				top: '0',
+				width: width,
+				height: height
+			}">
+		</live-pusher>
+		<view class="live-switch" @click="switchtLive">
+			<image v-show="liveStatus" src="../../static/chat/pause.png"></image>
+			<image v-show="!liveStatus" src="../../static/chat/end02.png"></image>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data () {
+			return {
+				width: '',
+				height: '',
+				livepush: 'rtmp://182.92.169.234:1935/live',
+				beauty: 0,
+				whiteness: 0,
+				context: null,
+				liveStatus: 0
+			}
+		},
+		mounted () {
+			let res = uni.getSystemInfoSync()
+			let that = this
+			that.width = res.windowWidth
+			that.height = res.windowHeight
+			that.$nextTick(function(){
+				
+				that.context = uni.createLivePusherContext('livePusher', this)
+			})
+		},
+		methods: {
+			// 切换直播
+			switchtLive() {
+				let that = this
+				if (that.liveStatus) {
+					that.context.pause({
+						success: function (a) {
+							console.log(a)
+						}
+					});
+					that.liveStatus = 0
+				} else {
+					if (!that.liveStart) {
+						that.context.start({
+							success: function (a) {
+								that.startLive({
+									type: 'start'
+								})
+							}
+						})
+						that.liveStart = true
+					} else {
+						that.context.resume({
+							success: (a) => {
+								console.log("livePusher.resume:" + JSON.stringify(a));
+							}
+						});
+					}
+					this.liveStatus = 1
+				}
+			}
+		}
+	}
+</script>

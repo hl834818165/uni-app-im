@@ -17,6 +17,7 @@
 				dataType: 'json'
 			})
 			.then(res => {
+				console.log(res)
 				if (res[1].data.code == -1) {
 					uni.navigateTo({
 					    url: '/pages/liveLogin/liveLogin'

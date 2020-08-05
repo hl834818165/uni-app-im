@@ -1,0 +1,119 @@
+
+.msg {
+	width: 100%;
+	box-sizing: border-box;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: end;
+	-webkit-align-items: flex-end;
+	        align-items: flex-end;
+	background: #F4F4F4;
+	padding: 14rpx 18rpx;
+	overflow: hidden;
+}
+.msg .send-inp {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	height: auto;
+	min-height: 60rpx;
+	max-height: 180rpx;
+	background: #FFFFFF;
+	text-indent: 1em;
+	margin-right: 18rpx;
+}
+.msg .send-inp .uni-input {
+	width: 100%;
+	min-height: 60rpx;
+	max-height: 180rpx;
+	line-height: 60rpx;
+}
+.msg .send-btn {
+	width: 0;
+	height: 56rpx;
+	text-align: center;
+	font-size: 24rpx;
+	color: #FFFFFF;
+	background-color: #1AAD19;
+	-webkit-transition: width .4s;
+	transition: width .4s;
+	line-height: 56rpx;
+}
+.msg .send-btn.active {
+	width: 80rpx;
+}
+.msg .send-icon {
+	width: 48rpx;
+	height: 48rpx;
+	margin-right: 18rpx;
+}
+.send-icon.send-add {
+	margin-right: 0;
+}
+.msg .send-icon image {
+	width: 100%;
+	height: 100%;
+}
+.card-box {
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	overflow: hidden;
+}
+.emoji-box,
+.more-box {
+	padding: 18rpx;
+	overflow: auto;
+}
+.emoji-box .emoji-item {
+	float: left;
+	width: 49rpx;
+	height: 49rpx;
+	margin-right: 46rpx;
+	margin-bottom: 46rpx;
+}
+.emoji-box .emoji-item:nth-child(8n) {
+	margin-right: 0;
+}
+.emoji-box .emoji-item image {
+	width: 100%;
+	height: 100%;
+}
+.more-box {
+	margin-top: 45rpx;
+}
+.more-box .more-item {
+	float: left;
+	width: 111rpx;
+	text-align: center;
+	font-size: 24rpx;
+	margin-right: 90rpx;
+	margin-bottom: 45rpx;
+}
+.more-box .more-item:nth-child(4n) {
+	margin-right: 0;
+}
+.more-box .more-item .item-img {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	width: 111rpx;
+	height: 111rpx;
+	background-color: #FFFFFF;
+	border-radius: 8rpx;
+}
+.more-box .more-item .item-img image {
+	width: 60rpx;
+	height: 60rpx;
+}
+.more-box .more-item .item-txt {
+	display: block;
+	margin-top: 12rpx;
+}
+

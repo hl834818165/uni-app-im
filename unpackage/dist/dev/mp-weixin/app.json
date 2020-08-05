@@ -2,7 +2,7 @@
   "pages": [
     "pages/login/login",
     "pages/message/message",
-    "pages/friend/friend",
+    "pages/friend/firend",
     "pages/init/init",
     "pages/mine/mine",
     "pages/addFriend/addFriend",
@@ -31,7 +31,7 @@
         "text": "消息"
       },
       {
-        "pagePath": "pages/friend/friend",
+        "pagePath": "pages/friend/firend",
         "iconPath": "static/tabbar/friend-default.png",
         "selectedIconPath": "static/tabbar/friend-selected.png",
         "text": "通讯录"
@@ -44,6 +44,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap66.json"
+  "usingComponents": {}
 }

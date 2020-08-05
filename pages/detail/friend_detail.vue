@@ -40,6 +40,7 @@
 
 <script>
 	import api from '../../api/api.js'
+	import { mapState, mapActions } from 'vuex'
 	export default {
 		data () {
 			return {
@@ -50,6 +51,11 @@
 					title: ''
 				}
 			}
+		},
+		computed: {
+			...mapState([
+				'base'
+			])
 		},
 		onLoad (ops) {
 			if (ops.redirect) {
@@ -68,27 +74,22 @@
 			}
 		},
 		methods: {
+			...mapActions([
+				'ACT_SEARCH_APPLY'
+			]),
 			/** 搜索用户 */
 			searchFriend(param) {
+				let self = this
 				api.searchFriend(param)
 				.then(res => {
 					let _res = res[1].data
 					if (_res.code == 200) {
-						this.$set(this, 'list', _res.data[0])
-						uni.getStorage({
-							key: 'mine',
-							success: (mine) => {
-								let _mine = JSON.parse(mine.data)
-								let _list = {
-									uid: _mine.username,
-									friend_remark: _mine.name,
-									friend_uid: param.uid
-								}
-								uni.setStorage({
-									key: 'search_apply',
-									data: JSON.stringify(_list)
-								})
-							}
+						self.$set(self, 'list', _res.data[0])
+						let _mine = self.base.mine
+						self.ACT_SEARCH_APPLY({
+							uid: _mine.username,
+							friend_remark: _mine.name,
+							friend_uid: param.uid
 						})
 					} else {
 						this.$set(this.logList, 'show', true)

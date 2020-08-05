@@ -24,7 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.uni-popup-message.data-v-76800af6 {
+.uni-popup-message.data-v-2b5e1e44 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -38,40 +38,40 @@
   border-style: solid;
   border-width: 1px;
 }
-.uni-popup-message-text.data-v-76800af6 {
+.uni-popup-message-text.data-v-2b5e1e44 {
   font-size: 14px;
   padding: 0;
   margin: auto;
 }
-.uni-popup__success.data-v-76800af6 {
+.uni-popup__success.data-v-2b5e1e44 {
   background-color: #e1f3d8;
   margin: auto;
 }
-.uni-popup__success-text.data-v-76800af6 {
+.uni-popup__success-text.data-v-2b5e1e44 {
   color: #67C23A;
   margin: auto;
 }
-.uni-popup__warn.data-v-76800af6 {
+.uni-popup__warn.data-v-2b5e1e44 {
   background-color: #faecd8;
   margin: auto;
 }
-.uni-popup__warn-text.data-v-76800af6 {
+.uni-popup__warn-text.data-v-2b5e1e44 {
   color: #E6A23C;
   margin: auto;
 }
-.uni-popup__error.data-v-76800af6 {
+.uni-popup__error.data-v-2b5e1e44 {
   background-color: #fde2e2;
   margin: auto;
 }
-.uni-popup__error-text.data-v-76800af6 {
+.uni-popup__error-text.data-v-2b5e1e44 {
   color: #F56C6C;
   margin: auto;
 }
-.uni-popup__info.data-v-76800af6 {
+.uni-popup__info.data-v-2b5e1e44 {
   background-color: #F2F6FC;
   margin: auto;
 }
-.uni-popup__info-text.data-v-76800af6 {
+.uni-popup__info-text.data-v-2b5e1e44 {
   color: #909399;
   margin: auto;
 }

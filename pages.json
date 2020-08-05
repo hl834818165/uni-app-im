@@ -7,6 +7,12 @@
 				"navigationBarTitleText": "登录"
 			}
 		}, {
+			"id": "init",
+			"path": "pages/init/init",
+			"style": {
+				"navigationBarTitleText": "加载中"
+			}
+		}, {
 			"id": "message",
 			"path": "pages/message/message",
 			"style": {
@@ -14,15 +20,19 @@
 			}
 		}, {
 			"id": "friend",
-			"path": "pages/friend/friend",
+			"path": "pages/friend/firend",
 			"style": {
 				"navigationBarTitleText": "通讯录"
 			}
 		}, {
-			"id": "init",
-			"path": "pages/init/init",
+			"id": "live",
+			"path": "pages/live/live",
 			"style": {
-				"navigationBarTitleText": "加载中"
+				"app-plus": {
+					"titleNView": false,
+					"scrollIndicator": "none"
+				},
+				"navigationBarTitleText": "直播"
 			}
 		}, {
 			"id": "mine",
@@ -74,10 +84,15 @@
 			"selectedIconPath": "static/tabbar/msg-selected.png",
 			"text": "消息"
 		}, {
-			"pagePath": "pages/friend/friend",
+			"pagePath": "pages/friend/firend",
 			"iconPath": "static/tabbar/friend-default.png",
 			"selectedIconPath": "static/tabbar/friend-selected.png",
 			"text": "通讯录"
+		}, {
+			"pagePath": "pages/live/live",
+			"iconPath": "static/tabbar/live-default.png",
+			"selectedIconPath": "static/tabbar/live-selected.png",
+			"text": "直播"
 		}, {
 			"pagePath": "pages/mine/mine",
 			"iconPath": "static/tabbar/mine-default.png",

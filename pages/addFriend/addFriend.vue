@@ -58,7 +58,9 @@
 
 <script>
 	import api from '../../api/api.js'
+	import unit from '../../unit/unit.js'
 	import uniIcons from '../../components/uni-icons/icons.js'
+	import { mapState, mapActions } from 'vuex'
 	export default {
 		comments: {
 			uniIcons
@@ -80,46 +82,77 @@
 		},
 		onBackPress (e) {
 			uni.switchTab({
-				url: '../friend/friend'
+				url: '../friend/firend'
 			})
 			return true
 		},
+		computed: {
+			...mapState([
+				'base'
+			])
+		},
 		onShow () {
-			// this.getApply()
-			this.$set(this.oldList, 'data', getApp().globalData.applys)
+			this.$set(this.oldList, 'data', this.base.applys)
+		},
+		onUnload () {
+			// 请求修改当前的时间
+			this.lookApply()
 		},
 		methods: {
+			...mapActions([
+				'ACT_MINE',
+				'ACT_APPLYCOUNT'
+			]),
 			/** 切换输入状态 */
 			switchSearch() {
 				this.nowList.show = !this.nowList.show
 			},
+			/** 查看最后一次好友申请时间 */
+			lookApply () {
+				let self = this
+				let _res = self.base.mine
+				let _now = new Date().getTime()
+				
+				api.lookApply({
+					username: _res.username,
+					date_time: _now
+				})
+				.then(res => {
+					if (res[1].data.code == 200) {
+						self.base.mine.apply_last_time = String(_now)
+						self.ACT_MINE(self.base.mine)
+						// 设置 消息标记
+						self.ACT_APPLYCOUNT('0')
+						uni.removeTabBarBadge({
+							index: 1
+						})
+					}
+				})
+				.catch(ret => {
+					console.log(ret)
+				})
+			},
 			/** 获取申请列表 */
 			getApply () {
 				let self = this
-				uni.getStorage({
-					key: 'mine',
-					success: (res) => {
-						let _res = JSON.parse(res.data)
-						api.getApply({
-							friend_uid: _res.username,
-							pass_state: '',
-							uid: ''
-						})
-						.then(res => {
-							let _res = res[1].data
-							if (_res.code == 200) {
-								self.$set(self.oldList, 'data', _res.data)
-							}
-						})
-						.catch(ret => {
-							console.log(ret)
-						})
+				let _res = self.base.mine
+				api.getApply({
+					friend_uid: _res.username,
+					pass_state: '',
+					uid: ''
+				})
+				.then(res => {
+					let _res = res[1].data
+					if (_res.code == 200) {
+						self.$set(self.oldList, 'data', _res.data)
 					}
+				})
+				.catch(ret => {
+					console.log(ret)
 				})
 			},
 			/** 查看好友申请 */
 			detailApply (e) {
-				console.log(e)
 				uni.navigateTo({
 					url: '../detail/detail_apply?uid=' + e.uid,
 					animationType: 'pop-in',
@@ -154,36 +187,3 @@
 		}
 	}
 </script>
-
-<style scoped>
-	.search-box {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background-color: #FFFFFF;
-		padding: 12rpx;
-		color: #808080;
-	}
-
-	.search-box .search-txt,
-	.search-box .search-inp {
-		flex: 1;
-		padding: 0 12rpx;
-	}
-
-	.search-box .search-inp {
-		font-size: 16px;
-		height: unset;
-		min-height: unset;
-		line-height: unset;
-	}
-
-	.search-box.search-now {
-		justify-content: baseline;
-	}
-
-	.search-operation .search-operation-btn {
-		color: #1AAD19;
-		padding: 0 12rpx;
-	}
-</style>

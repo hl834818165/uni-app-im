@@ -41,6 +41,7 @@
 
 <script>
 	import api from '../../api/api.js'
+	import { mapState } from 'vuex'
 	export default {
 		data () {
 			return {
@@ -52,6 +53,11 @@
 				}
 			}
 		},
+		computed: {
+			...mapState([
+				'base'
+			])
+		},
 		onLoad (ops) {
 			if (ops.redirect) {
 				uni.redirectTo({
@@ -60,16 +66,12 @@
 			}
 			if (ops.uid) { // 携带参数
 				this.$set(this, 'uid', ops.uid)
-				uni.getStorage({
-					key: 'mine',
-					success: (mine) => {
-						let _mine = JSON.parse(mine.data)
-						this.getApply({
-							uid: ops.uid,
-							friend_uid: _mine.username,
-							pass_state: ''
-						})
-					}
+				let _mine = this.base.mine
+				console.log(_mine)
+				this.getApply({
+					uid: ops.uid,
+					friend_uid: _mine.username,
+					pass_state: ''
 				})
 			} else { // 缺少参数
 				this.$set(this.logList, 'show', true)
@@ -95,13 +97,13 @@
 				})
 			},
 			setApply (e) {
-				this.list.pass_state = e
-				api.setApply(this.list)
+				let self = this
+				self.list.pass_state = e
+				api.setApply(self.list)
 				.then(res => {
-					console.log(res)
 					let _res = res[1].data
 					if (_res.code == 200) {
-						alert('操作成功')
+						self.base.applys.filter(a => a.uid == self.list.uid)[0].pass_state = e
 						uni.redirectTo({
 							url: '../friend/friend'
 						})

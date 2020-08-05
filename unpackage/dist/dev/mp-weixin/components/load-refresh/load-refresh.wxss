@@ -24,12 +24,12 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.load-refresh.data-v-02db016b {
+.load-refresh.data-v-2cb7ba04 {
   margin: 0;
   padding: 0;
   width: 100%;
 }
-.load-refresh .refresh.data-v-02db016b {
+.load-refresh .refresh.data-v-2cb7ba04 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -42,14 +42,14 @@
   height: 120rpx;
   width: 100%;
 }
-.load-refresh .hollow-dots-spinner.data-v-02db016b {
+.load-refresh .hollow-dots-spinner.data-v-2cb7ba04 {
   box-sizing: border-box;
 }
-.load-refresh .hollow-dots-spinner.data-v-02db016b {
+.load-refresh .hollow-dots-spinner.data-v-2cb7ba04 {
   height: 100rpx;
   width: 100%;
 }
-.load-refresh .hollow-dots-spinner .dot.data-v-02db016b {
+.load-refresh .hollow-dots-spinner .dot.data-v-2cb7ba04 {
   width: 15px;
   height: 15px;
   margin: 0 calc(15px / 2);
@@ -58,22 +58,22 @@
   float: left;
   -webkit-transform: scale(0);
           transform: scale(0);
-  -webkit-animation: hollow-dots-spinner-animation-data-v-02db016b 1000ms ease infinite 0ms;
-          animation: hollow-dots-spinner-animation-data-v-02db016b 1000ms ease infinite 0ms;
+  -webkit-animation: hollow-dots-spinner-animation-data-v-2cb7ba04 1000ms ease infinite 0ms;
+          animation: hollow-dots-spinner-animation-data-v-2cb7ba04 1000ms ease infinite 0ms;
 }
-.load-refresh .hollow-dots-spinner .dot.data-v-02db016b:nth-child(1) {
+.load-refresh .hollow-dots-spinner .dot.data-v-2cb7ba04:nth-child(1) {
   -webkit-animation-delay: calc(300ms * 1);
           animation-delay: calc(300ms * 1);
 }
-.load-refresh .hollow-dots-spinner .dot.data-v-02db016b:nth-child(2) {
+.load-refresh .hollow-dots-spinner .dot.data-v-2cb7ba04:nth-child(2) {
   -webkit-animation-delay: calc(300ms * 2);
           animation-delay: calc(300ms * 2);
 }
-.load-refresh .hollow-dots-spinner .dot.data-v-02db016b:nth-child(3) {
+.load-refresh .hollow-dots-spinner .dot.data-v-2cb7ba04:nth-child(3) {
   -webkit-animation-delay: calc(300ms * 3);
           animation-delay: calc(300ms * 3);
 }
-@-webkit-keyframes hollow-dots-spinner-animation-data-v-02db016b {
+@-webkit-keyframes hollow-dots-spinner-animation-data-v-2cb7ba04 {
 50% {
     -webkit-transform: scale(1);
             transform: scale(1);
@@ -83,7 +83,7 @@
     opacity: 0;
 }
 }
-@keyframes hollow-dots-spinner-animation-data-v-02db016b {
+@keyframes hollow-dots-spinner-animation-data-v-2cb7ba04 {
 50% {
     -webkit-transform: scale(1);
             transform: scale(1);
@@ -93,14 +93,14 @@
     opacity: 0;
 }
 }
-.load-refresh .cover-container.data-v-02db016b {
+.load-refresh .cover-container.data-v-2cb7ba04 {
   width: 100%;
   margin-top: -100rpx;
 }
-.load-refresh .cover-container .list.data-v-02db016b {
+.load-refresh .cover-container .list.data-v-2cb7ba04 {
   width: 100%;
 }
-.load-refresh .cover-container .list .load-more.data-v-02db016b {
+.load-refresh .cover-container .list .load-more.data-v-2cb7ba04 {
   font-size: 20rpx;
   text-align: center;
   color: #AAAAAA;
